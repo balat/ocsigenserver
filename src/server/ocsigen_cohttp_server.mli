@@ -26,9 +26,17 @@ module Request : sig
 
   val port : t -> int
 
+  val ssl : t -> bool
+
   val query : t -> string option
 
   val path : t -> string list
+
+  val path_string : t -> string
+
+  val sub_path : t -> string list
+
+  val sub_path_string : t -> string
 
   val header : t -> string -> string option
 
@@ -45,6 +53,13 @@ module Answer : sig
     a_body     : Cohttp_lwt_body.t ;
     a_cookies  : Ocsigen_cookies.cookieset
   }
+
+  val make :
+    ?cookies : Ocsigen_cookies.cookieset ->
+    ?body : Cohttp_lwt_body.t ->
+    response : Cohttp.Response.t ->
+    unit ->
+    t
 
   val of_cohttp :
     ?cookies : Ocsigen_cookies.cookieset ->
